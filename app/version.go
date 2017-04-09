@@ -9,10 +9,31 @@
 
 package main
 
-const (
+import (
+	"fmt"
+	"runtime"
+)
+
+var (
 	Version     = "0.0.01"
 	DATE        = "2017/04/09"
 	GETTY_MAJOR = 0
 	GETTY_MINOR = 7
 	GETTY_BUILD = 1
 )
+
+// SetVersion for setup Version string.
+func SetVersion(ver string) {
+	Version = ver
+}
+
+// PrintWorkerVersion provide print server engine
+func PrintVersion() {
+	fmt.Printf(`kafka-connect-elasticsearch %s, Compiler: %s %s, Copyright (C) %s Alex Stocks.`,
+		Version,
+		runtime.Compiler,
+		runtime.Version(),
+		DATE,
+	)
+	fmt.Println()
+}
