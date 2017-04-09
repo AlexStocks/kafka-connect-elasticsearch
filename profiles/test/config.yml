@@ -1,0 +1,24 @@
+core:
+  worker_num: 2
+  queue_num: 8192
+  fail_fast_timeout: 3 # 当程序收到signal时候，要保证在fail_fast_timeout(unit: second)时间段内退出
+  pid:
+    enabled: false
+    path: "kafka2es.pid"
+    override: true
+
+kafka:
+  brokers: "10.116.27.23:9292,10.116.27.24:9292,10.116.27.25:9292"
+  topic: "tm_log"
+  consumer_group: "es_stat"
+
+es:
+  es_hosts:
+    -
+      http://119.81.218.90:5858
+  shard_num: 5
+  replica_num: 0
+  refresh_interval: 300
+  index: push
+  type: go
+
