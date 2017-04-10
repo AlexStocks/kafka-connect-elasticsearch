@@ -15,26 +15,6 @@ import (
 // kafka messaeg -> es
 /////////////////////////////////////////////////
 
-type TelemetryMessage struct {
-	EventName string `json:"event_name,omitempty"`
-	Timestamp int64  `json:"ts,omitempty"` // time.Now.Unix()
-	IP        string `json:"ip,omitempty"`
-
-	Topic     string `json:"topic,omitempty"`
-	Partition int32  `json:"partition,omitempty"`
-	Offset    int64  `json:"offset,omitempty"`
-	Message   string `json:"message,omitempty"`
-
-	UID        string `json:"uid,omitempty"`
-	PlanID     int64  `json:"plan_id,omitempty"`
-	UUID       string `json:"uuid,omitempty"`
-	OS         int    `json:"os,omitempty"`
-	AppID      int    `json:"app_id,omitempty"`
-	Token      string `json:"token,omitempty"`
-	Status     string `json:"status,omitempty"`
-	FailReason string `json:"fail_reason,omitempty"`
-}
-
 /////////////////////////////////////////////////
 // pusher-worker
 /////////////////////////////////////////////////
