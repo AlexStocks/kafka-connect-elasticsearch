@@ -37,7 +37,7 @@ var (
 	pprofPath = "/debug/pprof/"
 
 	usageStr = `
-Usage: pusher-worker [options]
+Usage: kafka-connect-elasticsearch [options]
 Server Options:
     -c, --config <file>              Configuration file path
     -k, --kafka_log <file>           Kafka Log configuration file
