@@ -20,9 +20,9 @@ if [[ ${OS_NAME} != "Windows" ]]; then
     PROJECT_HOME=${PROJECT_HOME}"/"
 fi
 
-export APP_CONF_FILE=${PROJECT_HOME}"conf/config.yml"
-export APP_LOG_CONF_FILE=${PROJECT_HOME}"conf/log.xml"
-export APP_KAFKA_LOG_CONF_FILE=${PROJECT_HOME}"conf/kafka_log.xml"
+export APP_CONF_FILE=${PROJECT_HOME}"TARGET_CONF_FILE"
+export APP_LOG_CONF_FILE=${PROJECT_HOME}"TARGET_LOG_CONF_FILE"
+export APP_KAFKA_LOG_CONF_FILE=${PROJECT_HOME}"TARGET_KAFKA_LOG_CONF_FILE"
 
 usage() {
     echo "Usage: $0 start"
