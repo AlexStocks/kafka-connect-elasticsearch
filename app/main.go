@@ -195,6 +195,10 @@ func main() {
 		kafkaLogConf string
 	)
 
+	/////////////////////////////////////////////////
+	// conf
+	/////////////////////////////////////////////////
+
 	SetVersion(Version)
 
 	flag.BoolVar(&showVersion, "v", false, "Print version information.")
@@ -246,7 +250,7 @@ func main() {
 	}
 
 	/////////////////////////////////////////////////
-	// pusher-worker work as a pusher service
+	// worker
 	/////////////////////////////////////////////////
 	if Kafka2EsConf.Core.FailFastTimeout == 0 {
 		Kafka2EsConf.Core.FailFastTimeout = FAILFAST_TIMEOUT
