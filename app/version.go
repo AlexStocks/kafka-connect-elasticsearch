@@ -24,7 +24,7 @@ func SetVersion(ver string) {
 	Version = ver
 }
 
-// PrintWorkerVersion provide print server engine
+// PrintVersion provide print server engine
 func PrintVersion() {
 	fmt.Printf(`kafka-connect-elasticsearch %s, Compiler: %s %s, Copyright (C) %s Alex Stocks.`,
 		Version,
