@@ -26,7 +26,7 @@ var (
 	LocalHost string
 	// progress id
 	ProcessID string
-	// Kafka2EsConf is pusher-main config
+	// Kafka2EsConf is main config
 	Kafka2EsConf ConfYaml
 	// Consumer
 	KafkaConsumer gxkafka.Consumer
