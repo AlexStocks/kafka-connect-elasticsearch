@@ -223,7 +223,7 @@ func main() {
 	if configFile == "" {
 		configFile = os.Getenv(APP_CONF_FILE)
 		if configFile == "" {
-			usage()
+			panic("can not load configFile")
 		}
 	}
 	if path.Ext(configFile) != ".yml" {
@@ -238,15 +238,15 @@ func main() {
 
 	if logConf == "" {
 		logConf = os.Getenv(APP_LOG_CONF_FILE)
-		if configFile == "" {
-			usage()
+		if logConf == "" {
+			panic("can not load logConf")
 		}
 	}
 
 	if kafkaLogConf == "" {
 		kafkaLogConf = os.Getenv(APP_KAFKA_LOG_CONF_FILE)
 		if kafkaLogConf == "" {
-			usage()
+			panic("can not load kafkaLogConf")
 		}
 	}
 
