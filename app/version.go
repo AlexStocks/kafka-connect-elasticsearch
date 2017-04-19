@@ -15,11 +15,8 @@ import (
 )
 
 var (
-	Version     = "0.0.01"
-	DATE        = "2017/04/09"
-	GETTY_MAJOR = 0
-	GETTY_MINOR = 7
-	GETTY_BUILD = 1
+	Version = "0.0.01"
+	DATE    = "2017/04/09"
 )
 
 // SetVersion for setup Version string.
