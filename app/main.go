@@ -90,7 +90,7 @@ func createPIDFile() error {
 			return fmt.Errorf("Can't create PID file: %v", err)
 		}
 		defer file.Close()
-		if _, err := file.WriteString(strconv.FormatInt(int64(currentPid), 10)); err != nil {
+		if _, err := file.WriteString(fmt.Sprintf("%s-%s", ProcessID, strconv.FormatInt(int64(currentPid), 10))); err != nil {
 			return fmt.Errorf("Can'write PID information on %s: %v", pidPath, err)
 		}
 	} else {
