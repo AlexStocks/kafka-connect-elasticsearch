@@ -6,6 +6,7 @@ import (
 )
 
 import (
+	"fmt"
 	"github.com/AlexStocks/goext/runtime"
 	"github.com/Shopify/sarama"
 	sc "github.com/bsm/sarama-cluster"
@@ -122,4 +123,8 @@ func (w *EsWorker) enqueueKafkaMessage(message *sarama.ConsumerMessage, preOffse
 	Log.Debug("enqueue{message:%s}", string(message.Value))
 	w.Q <- message
 	return
+}
+
+func (w *EsWorker) Info() string {
+	return fmt.Sprintf("elasticsearch worker queue size %d", len(w.Q))
 }

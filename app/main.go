@@ -182,6 +182,7 @@ func initSignal() {
 			}
 		case <-time.After(time.Duration(60e9)):
 			updateLastDate()
+			Log.Info(Worker.Info())
 		}
 	}
 }
