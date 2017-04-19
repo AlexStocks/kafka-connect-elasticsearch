@@ -2,7 +2,7 @@
 ---
 
 - 2017/04/19
-   >impovement
+   > impovement
 	* add hostinfo in pidfile
 	* add worker queue size info log
 
