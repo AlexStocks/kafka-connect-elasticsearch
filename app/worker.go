@@ -85,7 +85,7 @@ func (w *EsWorker) Stop() {
 	w.wg.Wait()
 }
 
-// check whether the session has been closed.
+// check whether the worker has been closed.
 func (w *EsWorker) IsClosed() bool {
 	select {
 	case <-w.done:
