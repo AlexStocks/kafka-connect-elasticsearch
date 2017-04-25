@@ -70,6 +70,8 @@ LOOP:
 		case message = <-w.Q:
 			Log.Debug("dequeue{worker{%d-%d} , message{topic:%v, partition:%v, offset:%v, msg:%v}}}",
 				index, id, message.Topic, message.Partition, message.Offset, string(message.Value))
+			KafkaLog.Info("consumer{worker{%d-%d} , message{topic:%v, partition:%v, offset:%v}}}",
+				index, id, message.Topic, message.Partition, message.Offset)
 			docArray = append(docArray, message.Value)
 			if int(Kafka2EsConf.Es.BulkSize) <= len(docArray) {
 				flag = true
