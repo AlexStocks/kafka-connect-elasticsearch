@@ -1,13 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 import (
-	"fmt"
 	"github.com/AlexStocks/goext/runtime"
+	"github.com/AlexStocks/goext/time"
 	"github.com/Shopify/sarama"
 	sc "github.com/bsm/sarama-cluster"
 )
@@ -50,10 +52,12 @@ var (
 
 func (w *EsWorker) startEsWorker() {
 	var (
-		id      int
-		index   uint64
-		err     error
-		message *sarama.ConsumerMessage
+		flag     bool
+		id       int
+		index    uint64
+		err      error
+		message  *sarama.ConsumerMessage
+		docArray []interface{}
 	)
 
 	id = gxruntime.GoID()
@@ -66,17 +70,34 @@ LOOP:
 		case message = <-w.Q:
 			Log.Debug("dequeue{worker{%d-%d} , message{topic:%v, partition:%v, offset:%v, msg:%v}}}",
 				index, id, message.Topic, message.Partition, message.Offset, string(message.Value))
-			err = EsClient.Insert(getIndex(), Kafka2EsConf.Es.Type, message.Value)
-			if err != nil {
-				Log.Error("%#v", err)
-			} else {
-				Log.Info("successfully insert msg %#v into es", (string)(message.Value))
+			docArray = append(docArray, message.Value)
+			if int(Kafka2EsConf.Es.BulkSize) <= len(docArray) {
+				flag = true
+			}
+
+		case <-time.After(gxtime.TimeSecondDuration(int(Kafka2EsConf.Es.BulkTimeout))):
+			if 0 < len(docArray) {
+				flag = true
 			}
 
 		case <-w.done:
+			if 0 < len(docArray) {
+				EsClient.BulkInsert(getIndex(), Kafka2EsConf.Es.Type, docArray)
+			}
 			w.wg.Done()
 			Log.Info("worker{%d-%d} exits now.", index, id)
 			break LOOP
+		}
+
+		if flag {
+			err = EsClient.BulkInsert(getIndex(), Kafka2EsConf.Es.Type, docArray)
+			if err != nil {
+				Log.Error("%#v", err)
+			} else {
+				Log.Info("successfully insert %d msgs into es", len(docArray))
+			}
+			flag = false
+			docArray = docArray[:0]
 		}
 	}
 }

@@ -15,8 +15,8 @@ import (
 )
 
 var (
-	Version = "0.0.01"
-	DATE    = "2017/04/09"
+	Version = "0.0.02"
+	DATE    = "2017/04/25"
 )
 
 // SetVersion for setup Version string.

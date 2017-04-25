@@ -19,6 +19,8 @@ es:
   shard_num: 5
   replica_num: 0
   refresh_interval: 300
+
   index: push
   type: go
-
+  bulk_size: 1000
+  bulk_timeout: 60
