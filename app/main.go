@@ -30,7 +30,8 @@ const (
 )
 
 const (
-	FAILFAST_TIMEOUT = 3 // in second
+	FailfastTimeout  = 3 // in second
+	KeepAliveTimeout = 60e9
 )
 
 var (
@@ -102,6 +103,7 @@ func createPIDFile() error {
 // initLog use for initial log module
 func initLog(logConf string) {
 	Log = gxlog.NewLoggerWithConfFile(logConf)
+	Log.SetAsDefaultLogger()
 }
 
 // initLog use for initial log module
@@ -156,8 +158,11 @@ func initKafkaConsumer() {
 }
 
 func initSignal() {
-	// signal.Notify的ch信道是阻塞的(signal.Notify不会阻塞发送信号), 需要设置缓冲
-	signals := make(chan os.Signal, 1)
+	var (
+		// signal.Notify的ch信道是阻塞的(signal.Notify不会阻塞发送信号), 需要设置缓冲
+		signals = make(chan os.Signal, 1)
+		ticker  = time.NewTimer(KeepAliveTimeout)
+	)
 	// It is not possible to block SIGKILL or syscall.SIGSTOP
 	signal.Notify(signals, os.Interrupt, os.Kill, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
 	for {
@@ -180,7 +185,9 @@ func initSignal() {
 				Log.Close()
 				return
 			}
-		case <-time.After(time.Duration(60e9)):
+
+		// case <-time.After(time.Duration(KeepAliveTimeout)):
+		case <-ticker.C:
 			updateLastDate()
 			Log.Info(Worker.Info())
 		}
@@ -254,7 +261,7 @@ func main() {
 	// worker
 	/////////////////////////////////////////////////
 	if Kafka2EsConf.Core.FailFastTimeout == 0 {
-		Kafka2EsConf.Core.FailFastTimeout = FAILFAST_TIMEOUT
+		Kafka2EsConf.Core.FailFastTimeout = FailfastTimeout
 	}
 
 	getHostInfo()
