@@ -181,6 +181,7 @@ func initSignal() {
 				// 要么survialTimeout时间内执行完毕下面的逻辑然后程序退出，要么执行上面的超时函数程序强行退出
 				KafkaConsumer.Stop()
 				KafkaLog.Close()
+				ticker.Stop()
 				Log.Warn("app exit now...")
 				Log.Close()
 				return
