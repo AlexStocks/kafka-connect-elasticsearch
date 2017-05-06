@@ -11,7 +11,8 @@
 
 APP_NAME="APPLICATION_NAME"
 APP_ARGS=""
-SLEEP_INTERVAL=10
+SLEEP_INTERVAL=5
+MAX_LIFETIME=4000
 
 PROJECT_HOME=""
 OS_NAME=`uname`
@@ -23,6 +24,8 @@ fi
 export APP_CONF_FILE=${PROJECT_HOME}"TARGET_CONF_FILE"
 export APP_LOG_CONF_FILE=${PROJECT_HOME}"TARGET_LOG_CONF_FILE"
 export APP_KAFKA_LOG_CONF_FILE=${PROJECT_HOME}"TARGET_KAFKA_LOG_CONF_FILE"
+# export GOTRACEBACK=system
+# export GODEBUG=gctrace=1
 
 usage() {
     echo "Usage: $0 start"
@@ -31,6 +34,7 @@ usage() {
     echo "       $0 restart"
     echo "       $0 list"
     echo "       $0 monitor"
+    echo "       $0 periodic_restart"
     exit
 }
 
@@ -127,6 +131,28 @@ monitor() {
     done
 }
 
+periodic_restart() {
+    idx=0
+    while true; do
+        PID=`ps aux | grep -w ${APP_NAME} | grep -v grep | awk '{print $2}'`
+        if [[ ${OS_NAME} != "Linux" && ${OS_NAME} != "Darwin" ]]; then
+            PID=`ps aux | grep -w ${APP_NAME} | grep -v grep | awk '{print $1}'`
+        fi
+        if [[ "${PID}" == "" ]]; then
+            start
+            idx=0
+        fi
+
+        ((LIFE=idx*${SLEEP_INTERVAL}))
+        echo "${APP_NAME} ( pid = " ${PID} ") has been working in normal state for " $LIFE " seconds."
+        ((idx ++))
+        sleep ${SLEEP_INTERVAL}
+        if [[ ${LIFE} -gt ${MAX_LIFETIME} ]]; then
+            kill -9 ${PID}
+        fi
+    done
+}
+
 opt=$1
 case C"$opt" in
     Cstart)
@@ -147,6 +173,9 @@ case C"$opt" in
         ;;
     Cmonitor)
         monitor
+        ;;
+    Cperiodic_restart)
+        periodic_restart
         ;;
     C*)
         usage
