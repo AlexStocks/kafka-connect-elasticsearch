@@ -58,13 +58,13 @@ func (w *EsWorker) startEsWorker() {
 		err      error
 		message  *sarama.ConsumerMessage
 		docArray []interface{}
-		ticker   *time.Timer
+		ticker   *time.Ticker
 	)
 
 	id = gxruntime.GoID()
 	index = atomic.AddUint64(&workerIndex, 1)
 	Log.Info("worker{%d-%d} starts to work now.", index, id)
-	ticker = time.NewTimer(gxtime.TimeSecondDuration(int(Kafka2EsConf.Es.BulkTimeout)))
+	ticker = time.NewTicker(gxtime.TimeSecondDuration(int(Kafka2EsConf.Es.BulkTimeout)))
 	defer ticker.Stop()
 
 LOOP:
