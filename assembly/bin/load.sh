@@ -34,7 +34,7 @@ usage() {
     echo "       $0 restart"
     echo "       $0 list"
     echo "       $0 monitor"
-    echo "       $0 periodic_restart"
+    echo "       $0 crontab"
     exit
 }
 
@@ -131,7 +131,7 @@ monitor() {
     done
 }
 
-periodic_restart() {
+crontab() {
     idx=0
     while true; do
         PID=`ps aux | grep -w ${APP_NAME} | grep -v grep | awk '{print $2}'`
@@ -175,7 +175,7 @@ case C"$opt" in
         monitor
         ;;
     Cperiodic_restart)
-        periodic_restart
+        crontab
         ;;
     C*)
         usage
