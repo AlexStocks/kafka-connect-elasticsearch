@@ -242,7 +242,7 @@ func main() {
 		log.Printf("Load yaml config file error: '%v'", err)
 		return
 	}
-	fmt.Printf("config: %+v\n", Kafka2EsConf)
+	fmt.Printf("config: %+v\n", gxlog.PrettyString(Kafka2EsConf))
 
 	if logConf == "" {
 		logConf = os.Getenv(APP_LOG_CONF_FILE)

@@ -49,12 +49,15 @@ func initEsIndex() {
 
 	// 创建今天的index
 	t = time.Now()
-	TdyIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.TimeSuffixFormat, t.Year(), t.Month(), t.Day())
-	err = EsClient.CreateEsIndex(
+	TdyIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.IndexTimeSuffixFormat, t.Year(), t.Month(), t.Day())
+	err = EsClient.CreateEsIndexWithTimestamp(
 		TdyIndex,
 		Kafka2EsConf.Es.ShardNum,
 		Kafka2EsConf.Es.ReplicaNum,
 		Kafka2EsConf.Es.RefreshInterval,
+		Kafka2EsConf.Es.Type,
+		Kafka2EsConf.Es.KibanaTimeField,
+		Kafka2EsConf.Es.KibanaTimeFormat,
 	)
 	if err != nil {
 		panic(err)
@@ -63,12 +66,15 @@ func initEsIndex() {
 
 	// 创建第二天的index
 	t = time.Now().AddDate(0, 0, 1)
-	TmwIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.TimeSuffixFormat, t.Year(), t.Month(), t.Day())
-	err = EsClient.CreateEsIndex(
+	TmwIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.IndexTimeSuffixFormat, t.Year(), t.Month(), t.Day())
+	err = EsClient.CreateEsIndexWithTimestamp(
 		TmwIndex,
 		Kafka2EsConf.Es.ShardNum,
 		Kafka2EsConf.Es.ReplicaNum,
 		Kafka2EsConf.Es.RefreshInterval,
+		Kafka2EsConf.Es.Type,
+		Kafka2EsConf.Es.KibanaTimeField,
+		Kafka2EsConf.Es.KibanaTimeFormat,
 	)
 	if err != nil {
 		panic(err)
@@ -85,7 +91,7 @@ func updateLastDate() {
 	)
 
 	tmw = time.Now().AddDate(0, 0, 1)
-	index = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.TimeSuffixFormat, tmw.Year(), tmw.Month(), tmw.Day())
+	index = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.IndexTimeSuffixFormat, tmw.Year(), tmw.Month(), tmw.Day())
 
 	IndexLock.RLock()
 	if TmwIndex != index {
