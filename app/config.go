@@ -43,10 +43,11 @@ type SectionEs struct {
 	ReplicaNum      int32    `yaml:"replica_num"`
 	RefreshInterval int32    `yaml:"refresh_interval"`
 
-	Index       string `yaml:"index"`
-	Type        string `yaml:"type"`
-	BulkSize    int32  `yaml:"bulk_size"`
-	BulkTimeout int32  `yaml:"bulk_timeout"`
+	Index            string `yaml:"index"`
+	Type             string `yaml:"type"`
+	TimeSuffixFormat string `yaml:"time_suffix_format"`
+	BulkSize         int32  `yaml:"bulk_size"`
+	BulkTimeout      int32  `yaml:"bulk_timeout"`
 }
 
 // LoadConfYaml provide load yml config.

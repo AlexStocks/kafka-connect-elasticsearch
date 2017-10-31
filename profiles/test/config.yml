@@ -22,5 +22,6 @@ es:
 
   index: push
   type: go
+  time_suffix_format: -%d%02d%02d
   bulk_size: 1000
   bulk_timeout: 60

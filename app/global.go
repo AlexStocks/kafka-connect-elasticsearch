@@ -12,10 +12,6 @@ import (
 	"github.com/AlexStocks/goext/log/kafka"
 )
 
-const (
-	DateFmt = "_%d_%02d_%02d"
-)
-
 type (
 	empty interface{}
 )
@@ -53,7 +49,7 @@ func initEsIndex() {
 
 	// 创建今天的index
 	t = time.Now()
-	TdyIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(DateFmt, t.Year(), t.Month(), t.Day())
+	TdyIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.TimeSuffixFormat, t.Year(), t.Month(), t.Day())
 	err = EsClient.CreateEsIndex(
 		TdyIndex,
 		Kafka2EsConf.Es.ShardNum,
@@ -67,7 +63,7 @@ func initEsIndex() {
 
 	// 创建第二天的index
 	t = time.Now().AddDate(0, 0, 1)
-	TmwIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(DateFmt, t.Year(), t.Month(), t.Day())
+	TmwIndex = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.TimeSuffixFormat, t.Year(), t.Month(), t.Day())
 	err = EsClient.CreateEsIndex(
 		TmwIndex,
 		Kafka2EsConf.Es.ShardNum,
@@ -89,7 +85,7 @@ func updateLastDate() {
 	)
 
 	tmw = time.Now().AddDate(0, 0, 1)
-	index = Kafka2EsConf.Es.Index + fmt.Sprintf(DateFmt, tmw.Year(), tmw.Month(), tmw.Day())
+	index = Kafka2EsConf.Es.Index + fmt.Sprintf(Kafka2EsConf.Es.TimeSuffixFormat, tmw.Year(), tmw.Month(), tmw.Day())
 
 	IndexLock.RLock()
 	if TmwIndex != index {
