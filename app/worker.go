@@ -98,7 +98,7 @@ LOOP:
 		if flag {
 			err = EsClient.BulkInsert(getIndex(), Kafka2EsConf.Es.Type, docArray)
 			if err != nil {
-				Log.Error("error:%#v, log:%#v", err, docArray[0])
+				Log.Error("error:%#v, log:%s", err, string(docArray[0].([]byte)))
 			} else {
 				Log.Info("successfully insert %d msgs into es", len(docArray))
 			}
