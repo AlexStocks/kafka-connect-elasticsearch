@@ -1,6 +1,10 @@
 ## develop history ##
 ---
 
+- 2017/11/04
+   > impovement
+	* add timestamp mappint-settings for kibana
+
 - 2017/05/05
    > impovement
 	* use tiker instead of time.After

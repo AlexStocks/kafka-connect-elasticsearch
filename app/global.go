@@ -100,13 +100,16 @@ func updateLastDate() {
 	IndexLock.RUnlock()
 
 	if flag {
-		err = EsClient.CreateEsIndex(
+		err = EsClient.CreateEsIndexWithTimestamp(
 			index,
 			Kafka2EsConf.Es.ShardNum,
 			Kafka2EsConf.Es.ReplicaNum,
 			Kafka2EsConf.Es.RefreshInterval,
+			Kafka2EsConf.Es.Type,
+			Kafka2EsConf.Es.KibanaTimeField,
+			Kafka2EsConf.Es.KibanaTimeFormat,
 		)
-		Log.Info("CreateEsIndex() = error:%#v", err)
+		Log.Info("CreateEsIndexWithTimestamp() = error:%#v", err)
 
 		if err == nil {
 			IndexLock.Lock()
