@@ -64,7 +64,7 @@ func (w *EsWorker) startEsWorker() {
 	id = gxruntime.GoID()
 	index = atomic.AddUint64(&workerIndex, 1)
 	Log.Info("worker{%d-%d} starts to work now.", index, id)
-	ticker = time.NewTicker(gxtime.TimeSecondDuration(int(Kafka2EsConf.Es.BulkTimeout)))
+	ticker = time.NewTicker(gxtime.TimeSecondDuration(float64(Kafka2EsConf.Es.BulkTimeout)))
 	defer ticker.Stop()
 
 LOOP:
@@ -80,7 +80,7 @@ LOOP:
 				flag = true
 			}
 
-		// case <-time.After(gxtime.TimeSecondDuration(int(Kafka2EsConf.Es.BulkTimeout))):
+		// case <-time.After(gxtime.TimeSecondDuration(float64(Kafka2EsConf.Es.BulkTimeout))):
 		case <-ticker.C:
 			if 0 < len(docArray) {
 				flag = true
