@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ******************************************************
-# DESC    : build script for test env
+# DESC    : build script for release env
 # AUTHOR  : Alex Stocks
 # VERSION : 1.0
 # LICENCE : Apache License 2.0
