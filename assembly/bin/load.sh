@@ -174,7 +174,7 @@ case C"$opt" in
     Cmonitor)
         monitor
         ;;
-    Cperiodic_restart)
+    Ccrontab)
         crontab
         ;;
     C*)
