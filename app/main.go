@@ -65,7 +65,7 @@ func getHostInfo() {
 		panic(fmt.Sprintf("os.Hostname() = %s", err))
 	}
 
-	LocalIP, err = gxnet.GetLocalIP(LocalIP)
+	LocalIP, err = gxnet.GetLocalIP()
 	if err != nil {
 		panic("can not get local IP!")
 	}

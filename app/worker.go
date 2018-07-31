@@ -9,6 +9,7 @@ import (
 
 import (
 	"github.com/AlexStocks/goext/runtime"
+	"github.com/AlexStocks/goext/strings"
 	"github.com/AlexStocks/goext/time"
 	"github.com/Shopify/sarama"
 	sc "github.com/bsm/sarama-cluster"
@@ -98,7 +99,8 @@ LOOP:
 		if flag {
 			err = EsClient.BulkInsert(getIndex(), Kafka2EsConf.Es.Type, docArray)
 			if err != nil {
-				Log.Error("error:%#v, log:%s", err, string(docArray[0].([]byte)))
+				// Log.Error("error:%#v, log:%s", err, (docArray[0].([]byte)))
+				Log.Error("error:%s, log:%s", err, gxstrings.String(docArray[0].([]byte)))
 			} else {
 				Log.Info("successfully insert %d msgs into es", len(docArray))
 			}
