@@ -4,10 +4,12 @@
     <type>file</type>
     <level>DEBUG</level>
     <property name="filename">logs/kafka2es_kafka_debug.log</property>
+    <property name="json">false</property> <!-- true enables json log format, its priority is high than format -->
     <property name="format">[%D %T] [%L] [%S] %M</property>
     <property name="rotate">true</property> <!-- true enables log rotation, otherwise append -->
     <property name="maxsize">0M</property> <!-- \d+[KMG]? Suffixes are in terms of 2**10 -->
     <property name="maxlines">0K</property> <!-- \d+[KMG]? Suffixes are in terms of thousands -->
+    <property name="maxbackup">16</property> <!-- \d+ -->
     <property name="daily">true</property> <!-- Automatically rotates when a log message is written after midnight -->
   </filter>
   <filter enabled="true">
@@ -15,10 +17,12 @@
     <type>file</type>
     <level>WARNING</level>
     <property name="filename">logs/kafka2es_kafka_warn.log</property>
+    <property name="json">false</property> <!-- true enables json log format, its priority is high than format -->
     <property name="format">[%D %T] [%L] [%S] %M</property>
     <property name="rotate">true</property> <!-- true enables log rotation, otherwise append -->
     <property name="maxsize">0M</property> <!-- \d+[KMG]? Suffixes are in terms of 2**10 -->
     <property name="maxlines">0K</property> <!-- \d+[KMG]? Suffixes are in terms of thousands -->
+    <property name="maxbackup">16</property> <!-- \d+ -->
     <property name="daily">true</property> <!-- Automatically rotates when a log message is written after midnight -->
   </filter>
 </logging>

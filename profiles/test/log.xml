@@ -1,19 +1,23 @@
 <logging>
-  <filter enabled="true">
+  <filter enabled="false">
     <tag>stdout</tag>
     <type>console</type>
     <!-- level is (:?FINEST|FINE|DEBUG|TRACE|INFO|WARNING|ERROR) -->
     <level>DEBUG</level>
+    <property name="json">false</property> <!-- true enables json log format, its priority is high than format -->
+    <property name="format">[%D %T] [%L] (%S) %M</property> <!-- log format, if json is false this option is enable -->
   </filter>
   <filter enabled="false">
     <tag>debug_file</tag>
     <type>file</type>
     <level>DEBUG</level>
     <property name="filename">logs/kafka2es_debug.log</property>
+    <property name="json">false</property> <!-- true enables json log format, its priority is high than format -->
     <property name="format">[%D %T] [%L] [%S] %M</property>
     <property name="rotate">true</property> <!-- true enables log rotation, otherwise append -->
     <property name="maxsize">0M</property> <!-- \d+[KMG]? Suffixes are in terms of 2**10 -->
     <property name="maxlines">0K</property> <!-- \d+[KMG]? Suffixes are in terms of thousands -->
+    <property name="maxbackup">16</property> <!-- \d+ -->
     <property name="daily">true</property> <!-- Automatically rotates when a log message is written after midnight -->
   </filter>
   <filter enabled="true">
@@ -43,10 +47,12 @@
     <type>file</type>
     <level>WARNING</level>
     <property name="filename">logs/kafka2es_warn.log</property>
+    <property name="json">false</property> <!-- true enables json log format, its priority is high than format -->
     <property name="format">[%D %T] [%L] [%S] %M</property>
     <property name="rotate">true</property> <!-- true enables log rotation, otherwise append -->
     <property name="maxsize">0M</property> <!-- \d+[KMG]? Suffixes are in terms of 2**10 -->
     <property name="maxlines">0K</property> <!-- \d+[KMG]? Suffixes are in terms of thousands -->
+    <property name="maxbackup">16</property> <!-- \d+ -->
     <property name="daily">true</property> <!-- Automatically rotates when a log message is written after midnight -->
   </filter>
   <filter enabled="false">
@@ -54,10 +60,12 @@
     <type>file</type>
     <level>ERROR</level>
     <property name="filename">logs/kafka2es_error.log</property>
+    <property name="json">false</property> <!-- true enables json log format, its priority is high than format -->
     <property name="format">[%D %T] [%L] [%S] %M</property>
     <property name="rotate">true</property> <!-- true enables log rotation, otherwise append -->
     <property name="maxsize">0M</property> <!-- \d+[KMG]? Suffixes are in terms of 2**10 -->
     <property name="maxlines">0K</property> <!-- \d+[KMG]? Suffixes are in terms of thousands -->
+    <property name="maxbackup">16</property> <!-- \d+ -->
     <property name="daily">true</property> <!-- Automatically rotates when a log message is written after midnight -->
   </filter>
 </logging>
