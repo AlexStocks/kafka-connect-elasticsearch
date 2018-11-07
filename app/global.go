@@ -7,8 +7,8 @@ import (
 )
 
 import (
+	"github.com/AlexStocks/goext/database/elasticsearch"
 	"github.com/AlexStocks/goext/log"
-	"github.com/AlexStocks/goext/log/elasticsearch"
 	"github.com/AlexStocks/goext/log/kafka"
 )
 
