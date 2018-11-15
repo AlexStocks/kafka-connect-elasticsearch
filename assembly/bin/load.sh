@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ******************************************************
-# DESC    : getty app devops script
+# DESC    : kafka-connect-elasticsearch devops script
 # AUTHOR  : Alex Stocks
 # VERSION : 1.0
 # LICENCE : LGPL V3
